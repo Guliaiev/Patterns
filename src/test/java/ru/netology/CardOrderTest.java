@@ -16,6 +16,22 @@ public class CardOrderTest {
     String phone = DataGenerator.makePhone();
     String city = DataGenerator.makeCity();
 
+    public static void correctFieldsCheks() {
+        String name = DataGenerator.makeName();
+        String phone = DataGenerator.makePhone();
+        String city = DataGenerator.makeCity();
+        $("[data-test-id=city] input").setValue(city);
+        $("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
+        $("[data-test-id=date] input").sendKeys(DataGenerator.forwardDate(3));
+        $("[data-test-id=name] input").setValue(name);
+        $("[data-test-id=phone] input").setValue(phone);
+    }
+
+    public static void clickButton() {
+        $("[data-test-id=agreement]").click();
+        $(".button__text").click();
+    }
+
     @BeforeEach
     void setUp() {
         open("http://localhost:9999/");
@@ -25,14 +41,14 @@ public class CardOrderTest {
     @Test
     void shouldNewRequest() {
         $("[data-test-id=city] input").setValue(city);
-        $("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
+        $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=date] input").sendKeys(DataGenerator.forwardDate(3));
         $("[data-test-id=name] input").setValue(name);
         $("[data-test-id=phone] input").setValue(phone);
         $("[data-test-id=agreement] .checkbox__box").click();
         $(withText("Запланировать")).click();
         $("[data-test-id='success-notification']").shouldBe(visible, ofSeconds(15));
-        $$(".notification").findBy(text("Встреча успешно запланирована на")).shouldBe(visible);
+        $$("[data-test-id='success-notification']>.notification__content").findBy(text("Встреча успешно запланирована на")).shouldBe(visible);
         $("[placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.CONTROL, "a")
                 + Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(DataGenerator.forwardDate(5));
@@ -52,7 +68,7 @@ public class CardOrderTest {
     @Test
     void shouldRequest() {
         $("[data-test-id=city] input").setValue(city);
-        $("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
+        $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=date] input").setValue(DataGenerator.forwardDate(3));
         $("[data-test-id=name] input").setValue(name);
         $("[data-test-id=phone] input").setValue(phone);
@@ -62,18 +78,8 @@ public class CardOrderTest {
                 .shouldBe(visible, Duration.ofSeconds(15));
         $$(".notification").findBy(text("Встреча успешно запланирована на")).shouldBe(visible);
     }
-
-
-    @Test
-    void shouldRequestMin() {
-        DataGenerator.correctFieldsCheks();
-        DataGenerator.clickButton();
-        $(withText("Успешно!"))
-                .shouldBe(visible, Duration.ofSeconds(5));
-        $$(".notification").findBy(text("Встреча успешно запланирована на")).shouldBe(visible);
-    }
-
-
 }
+
+
 
 

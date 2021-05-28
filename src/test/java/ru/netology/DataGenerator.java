@@ -2,7 +2,7 @@ package ru.netology;
 
 
 import com.github.javafaker.Faker;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import org.openqa.selenium.Keys;
 
@@ -53,20 +53,20 @@ public class DataGenerator {
         return myCityList[city];
     }
 
-    public static void correctFieldsCheks (){
-        String name = DataGenerator.makeName();
-        String phone = DataGenerator.makePhone();
-        String city = DataGenerator.makeCity();
-        $("[data-test-id=city] input").setValue(city);
-        $("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id=date] input").sendKeys(DataGenerator.forwardDate(3));
-        $("[data-test-id=name] input").setValue(name);
-        $("[data-test-id=phone] input").setValue(phone);
-    }
+//    public static void correctFieldsCheks (){
+//        String name = DataGenerator.makeName();
+//        String phone = DataGenerator.makePhone();
+//        String city = DataGenerator.makeCity();
+//        $("[data-test-id=city] input").setValue(city);
+//        $("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
+//        $("[data-test-id=date] input").sendKeys(DataGenerator.forwardDate(3));
+//        $("[data-test-id=name] input").setValue(name);
+//        $("[data-test-id=phone] input").setValue(phone);
+//    }
 
-    public static void clickButton(){
-        $("[data-test-id=agreement]").click();
-        $(".button__text").click();
-    }
+   // public static void clickButton(){
+   //    $("[data-test-id=agreement]").click();
+     //   $(".button__text").click();
+   // }
 }
 
